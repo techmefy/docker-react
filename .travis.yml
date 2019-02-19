@@ -6,4 +6,19 @@ before_install:
   - docker build -t techmefy/docker-react -f Dockerfile.dev .
 
 script:
-  - docker run techmefy/docker-react npm run test -- --coverage  
+  - docker run techmefy/docker-react npm run test -- --coverage
+
+deploy:
+    provider: elasticbeanstalk
+    region: "us-west-1"
+    app: "docker-react"
+    env: "Docker-react-env"
+    bucket_name: "elasticbeanstalk-xx-zzzz-n-84320482"
+    bucket_path: "docker-react"
+    on:
+      branch: master
+      access_key_id: $AWS_ACCESS_KEY
+      secret_access_key:
+        secure: "$AWS_SECRET_KEY"
+
+  
